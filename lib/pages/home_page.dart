@@ -1,6 +1,10 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:prakriti_app/models/model.dart';
+import 'package:prakriti_app/providers/list_item_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:prakriti_app/widgets/list_item_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,12 +15,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _searchController = TextEditingController();
+  List<ItemModel> _items = [];
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     _searchController.dispose(); // Search controller disposed
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _items = Provider.of<ListItemProvider>(context).items;
   }
 
   @override
@@ -86,8 +104,23 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
+              const SizedBox(
+                height: 40,
+              ),
               /* **********    ListView     *********** */
               // ListView.builder(itemBuilder: itemBuilder)
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: ((context, index) {
+                    return Container(
+                      height: 50,
+                      width: 40,
+                      color: Colors.black,
+                    );
+                  }),
+                  itemCount: _items.length,
+                ),
+              ),
             ],
           ),
         ),
