@@ -112,11 +112,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListView.builder(
                   itemBuilder: ((context, index) {
-                    return Container(
-                      height: 50,
-                      width: 40,
-                      color: Colors.black,
-                    );
+                    return const ListItemWidget();
                   }),
                   itemCount: _items.length,
                 ),

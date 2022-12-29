@@ -16,7 +16,7 @@ final regularTextFontStyle = GoogleFonts.raleway(
 );
 
 final commonNameFontStyle = GoogleFonts.raleway(
-  fontSize: 24,
+  fontSize: 16,
   fontWeight: FontWeight.w400,
 );
 

@@ -19,43 +19,38 @@ class _ListItemWidgetState extends State<ListItemWidget> {
         */
       }),
       child: Container(
-        height: 50,
-        width: 40,
+        // height: 50,
+        // width: 40,
         padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Neumorphic(
-              style: NeumorphicStyle(
-                shape: NeumorphicShape.concave,
-                depth: -5,
-                lightSource: LightSource.topRight,
-                color: Colors.grey[500],
-                intensity: 0.3
+            Container(
+              height: 100,
+              width: 100,
+              // color: Colors.amber,
+              decoration: BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.circular(50),
               ),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    15,
-                  ),
-                ),
-              ),
-            
             ),
             const SizedBox(
               height: 8,
             ),
             SizedBox(
               width: double.infinity,
-              child: Text("Common Name", style: commonNameFontStyle,),
+              child: Text(
+                "Common Name",
+                style: commonNameFontStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
             SizedBox(
               width: double.infinity,
               child: Text(
                 "Scientific Name",
                 style: scientificNameFontStyle,
+                textAlign: TextAlign.center,
               ),
             ),
           ],

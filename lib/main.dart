@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prakriti_app/pages/home_page.dart';
 import 'package:prakriti_app/providers/list_item_provider.dart';
-import 'package:prakriti_app/theme_data.dart';
 import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
