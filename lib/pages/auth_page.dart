@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prakriti_app/providers/auth_provider.dart';
 
@@ -13,24 +14,43 @@ class _AuthPageState extends State<AuthPage> {
   String passwd = "";
   final _formKey = GlobalKey<FormState>();
   bool newUser = false;
+  bool isAdmin = false;
 
   Future<void> signUp({
     required String email,
     required String passwd,
   }) async {
-    AuthProvider().createUserWithEmailAndPassword(
-      email: email,
-      passwd: passwd,
-    );
+    AuthProvider()
+        .createUserWithEmailAndPassword(
+          email: email,
+          passwd: passwd,
+        )
+        .then(
+          (value) =>
+              FirebaseFirestore.instance.collection("users").doc(email).set(
+            {
+              "role": "user",
+            },
+          ),
+        );
   }
 
   Future<void> logIn({
     required String email,
     required String passwd,
   }) async {
-    AuthProvider().signInWithEmailAndPassword(
+    AuthProvider()
+        .signInWithEmailAndPassword(
       email: email,
       passwd: passwd,
+    )
+        .then(
+      (value) async {
+        FirebaseFirestore.instance.collection("users").doc(email).get().then(
+              (value) => isAdmin = value.data()?.values.toString() == 'admin',
+            );
+        // print(role);
+      },
     );
   }
 

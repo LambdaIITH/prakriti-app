@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -7,7 +8,7 @@ class AuthProvider extends ChangeNotifier {
   String role = "";
 
   final _firebaseAuth = FirebaseAuth.instance;
-
+  bool isAdmin = false;
   User? get currentUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 

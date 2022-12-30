@@ -16,23 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 child: StreamBuilder<List<FloraModal>>(
                     stream: Provider.of<FloraProvider>(context).readFlora(),
                     builder: (context, snapshot) {
-                      print("error : ${snapshot.error}");
+                      // print("error : ${snapshot.error}");
                       if (snapshot.connectionState == ConnectionState.waiting ||
                           snapshot.data == null) {
                         return Container(
