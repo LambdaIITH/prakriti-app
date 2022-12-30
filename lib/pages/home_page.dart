@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
-import 'package:prakriti_app/models/model.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
-import 'package:prakriti_app/providers/auth_provider.dart';
-import 'package:prakriti_app/theme_data.dart';
 import 'package:prakriti_app/widgets/grid_item_widget.dart';
 import 'package:prakriti_app/widgets/home_page_title_widget.dart';
 import 'package:prakriti_app/widgets/search_bar_widget.dart';
@@ -19,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<ItemModel> _items = [];
 
   @override
   void dispose() {

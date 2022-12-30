@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prakriti_app/pages/auth_page.dart';
 import 'package:prakriti_app/pages/home_page.dart';
 import 'package:prakriti_app/providers/fauna_provider.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
@@ -33,8 +34,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
+        home: const AuthPage(),
+        routes: {
+          '/home_page': (context) => const HomePage(),
+          '/details': (context) => const AuthPage(),
+        },
       ),
+    
     );
   }
 }

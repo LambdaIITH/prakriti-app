@@ -1,43 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:prakriti_app/models/model.dart';
 
-class ListItemProvider extends ChangeNotifier {
-  final List<ItemModel> _items = [
-    ItemModel(
-      commonName: "Rose",
-      description: "This is a rose",
-      dp: null,
-      otherPics: null,
-      scientificName: "Rosa scientifica",
-      fauna: false,
-      flora: true,
-    ),
-    ItemModel(
-      commonName: "daisey",
-      description: "This is a daisey",
-      dp: null,
-      otherPics: null,
-      scientificName: "Daisa Scientifica",
-      fauna: false,
-      flora: true,
-    ),
-    ItemModel(
-        commonName: "Lion",
-        description: "King of jungle",
-        dp: null,
-        otherPics: null,
-        scientificName: "Panthera Leo",
-        fauna: true,
-        flora: false),
-    ItemModel(
-        commonName: "Tiger",
-        description: "The real one",
-        dp: null,
-        otherPics: null,
-        scientificName: "panthra tigris",
-        fauna: true,
-        flora: false),
-  ];
+class AuthProvider extends ChangeNotifier {
+  String username = "";
+  String email = "";
+  String role = "";
 
-  List<ItemModel> get items => [..._items];
+  final _firebaseAuth = FirebaseAuth.instance;
+
+  User? get currentUser => _firebaseAuth.currentUser;
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String passwd,
+  }) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: passwd,
+    );
+  }
+
+  Future<void> createUserWithEmailAndPassword({
+    required String email,
+    required String passwd,
+  }) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: passwd,
+    );
+  }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
 }
