@@ -53,7 +53,7 @@ class FloraModal {
       tolerance: json["tolerance"].toString(),
       waterNeeds: json["waterNeeds"].toString(),
       width: json["width"].toString(),
-      imgUrl: "",
+      imgUrl: json["imageUrl"].toString(),
     );
   }
 }

@@ -5,10 +5,12 @@ import 'package:prakriti_app/theme_data.dart';
 class GridItemWidget extends StatefulWidget {
   final String commonName;
   final String scientificName;
+  final String imageUrl;
 
   const GridItemWidget({
     required this.commonName,
     required this.scientificName,
+    required this.imageUrl,
     super.key,
   });
 
@@ -45,6 +47,10 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(221, 173, 172, 172),
                   borderRadius: BorderRadius.circular(50),
+                ),
+                child: Image.network(
+                  widget.imageUrl,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

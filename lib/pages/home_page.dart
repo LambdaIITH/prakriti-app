@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                           return GridItemWidget(
                             commonName: floraList[index].commonName,
                             scientificName: floraList[index].scientificName,
+                            imageUrl: floraList[index].imgUrl,
                           ); // pass arguments here
                         }),
                       );
