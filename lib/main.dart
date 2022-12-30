@@ -34,13 +34,18 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const AuthPage(),
+        home: StreamBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.hasData) return const HomePage();
+            return const AuthPage();
+          },
+          stream: AuthProvider().authStateChanges,
+        ),
         routes: {
           '/home_page': (context) => const HomePage(),
           '/details': (context) => const AuthPage(),
         },
       ),
-    
     );
   }
 }

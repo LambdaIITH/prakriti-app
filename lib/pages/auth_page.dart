@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -8,8 +9,30 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  String email = "";
+  String passwd = "";
   final _formKey = GlobalKey<FormState>();
   bool newUser = false;
+
+  Future<void> signUp({
+    required String email,
+    required String passwd,
+  }) async {
+    AuthProvider().createUserWithEmailAndPassword(
+      email: email,
+      passwd: passwd,
+    );
+  }
+
+  Future<void> logIn({
+    required String email,
+    required String passwd,
+  }) async {
+    AuthProvider().signInWithEmailAndPassword(
+      email: email,
+      passwd: passwd,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +44,7 @@ class _AuthPageState extends State<AuthPage> {
           padding: const EdgeInsets.all(12),
           child: Center(
             child: Form(
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -34,6 +58,7 @@ class _AuthPageState extends State<AuthPage> {
                       }
                       return null;
                     },
+                    onSaved: (newValue) => email = newValue!,
                   ),
                   const SizedBox(
                     height: 20,
@@ -48,6 +73,7 @@ class _AuthPageState extends State<AuthPage> {
                       }
                       return null;
                     },
+                    onSaved: (newValue) => passwd = newValue!,
                   ),
                   if (newUser)
                     TextFormField(
@@ -68,8 +94,23 @@ class _AuthPageState extends State<AuthPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Login"),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            if (newUser) {
+                              signUp(
+                                email: email,
+                                passwd: passwd,
+                              );
+                            } else {
+                              logIn(
+                                email: email,
+                                passwd: passwd,
+                              );
+                            }
+                          }
+                        },
+                        child: Text((!newUser) ? "Login" : "SignUp"),
                       ),
                       ElevatedButton(
                         onPressed: () {

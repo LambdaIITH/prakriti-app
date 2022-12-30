@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/widgets/grid_item_widget.dart';
 import 'package:prakriti_app/widgets/home_page_title_widget.dart';
@@ -15,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -51,8 +51,31 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Column(
             children: [
-              const SizedBox(
-                height: 50,
+              Stack(
+                children: [
+                  const SizedBox(
+                    width: double.maxFinite,
+                    // color: Colors.black,
+                    height: 50,
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: NeumorphicButton(
+                      onPressed: (() => AuthProvider().signOut()),
+                      style: const NeumorphicStyle(
+                        depth: 20,
+                        intensity: 1,
+                        lightSource: LightSource.topLeft,
+                        boxShape: NeumorphicBoxShape.circle(),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_upward_rounded,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const HomePageTitleWidget(),
               /**********   Search Bar    ***********/
