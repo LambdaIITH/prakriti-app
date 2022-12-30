@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lottie/lottie.dart';
+import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/models/model.dart';
-import 'package:prakriti_app/providers/list_item_provider.dart';
+import 'package:prakriti_app/providers/flora_provider.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
-import 'package:flutter/material.dart';
-import 'package:prakriti_app/widgets/list_item_widget.dart';
+import 'package:prakriti_app/widgets/grid_item_widget.dart';
+import 'package:prakriti_app/widgets/home_page_title_widget.dart';
+import 'package:prakriti_app/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,14 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _searchController = TextEditingController();
   List<ItemModel> _items = [];
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _searchController.dispose(); // Search controller disposed
   }
 
   @override
@@ -34,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _items = Provider.of<ListItemProvider>(context).items;
   }
 
   @override
@@ -47,75 +49,60 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             color: Colors.grey[200],
           ),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.only(
+            left: 8,
+            top: 8,
+            right: 8,
+          ),
           child: Column(
             children: [
               const SizedBox(
                 height: 50,
               ),
-              Container(
-                height: 100,
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                alignment: Alignment.center,
-                child: Text(
-                  "Prakriti",
-                  style: titleFontStyle,
-                ),
-              ),
+              const HomePageTitleWidget(),
               /**********   Search Bar    ***********/
-              Row(
-                children: [
-                  Expanded(
-                    child: Neumorphic(
-                      style: NeumorphicStyle(
-                          shape: NeumorphicShape.flat,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(24),
-                          ),
-                          depth: 5,
-                          intensity: 0.7,
-                          lightSource: LightSource.topLeft,
-                          color: Colors.grey[200]),
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        // width: double.infinity,
-                        child: TextField(
-                          cursorHeight: 24,
-                          cursorColor: Colors.black,
-                          controller: _searchController,
-                          onChanged:
-                              ((value) {}), // Implement on change for search
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(8),
-                            border: InputBorder.none,
-                          ),
-                          style: regularTextFontStyle,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: NeumorphicButton(
-                      child: const Icon(Icons.search),
-                      onPressed: (() {}), // implement search functionality
-                    ),
-                  )
-                ],
-              ),
+              const SearchBarWidget(),
               const SizedBox(
                 height: 40,
               ),
               /* **********    ListView     *********** */
               // ListView.builder(itemBuilder: itemBuilder)
               Expanded(
-                child: ListView.builder(
-                  itemBuilder: ((context, index) {
-                    return const ListItemWidget();
-                  }),
-                  itemCount: _items.length,
-                ),
+                child: StreamBuilder<List<FloraModal>>(
+                    stream: Provider.of<FloraProvider>(context).readFlora(),
+                    builder: (context, snapshot) {
+                      print("error : ${snapshot.error}");
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          snapshot.data == null) {
+                        return Container(
+                          child: Lottie.asset(
+                            // fit this animation to screen
+                            "assets/animations/loading.json",
+                            fit: BoxFit.contain,
+                          ),
+                        );
+                      }
+                      List<FloraModal> floraList = [];
+                      if (snapshot.hasData) {
+                        Provider.of<FloraProvider>(context).setFloraList =
+                            snapshot.data!;
+                        floraList =
+                            Provider.of<FloraProvider>(context).floraList;
+                        print(floraList[0].scientificName);
+                      }
+                      return GridView.builder(
+                        itemCount: floraList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2),
+                        itemBuilder: ((context, index) {
+                          return GridItemWidget(
+                            commonName: floraList[index].commonName,
+                            scientificName: floraList[index].scientificName,
+                          ); // pass arguments here
+                        }),
+                      );
+                    }),
               ),
             ],
           ),

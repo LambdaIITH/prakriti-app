@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prakriti_app/pages/home_page.dart';
-import 'package:prakriti_app/providers/list_item_provider.dart';
+import 'package:prakriti_app/providers/fauna_provider.dart';
+import 'package:prakriti_app/providers/flora_provider.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
@@ -20,8 +22,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ListItemProvider(),
+          create: (_) => FaunaProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => FloraProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

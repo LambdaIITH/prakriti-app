@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:prakriti_app/theme_data.dart';
 
-class ListItemWidget extends StatefulWidget {
-  const ListItemWidget({super.key});
+class GridItemWidget extends StatefulWidget {
+  final String commonName;
+  final String scientificName;
+
+  const GridItemWidget({
+    required this.commonName,
+    required this.scientificName,
+    super.key,
+  });
 
   @override
-  State<ListItemWidget> createState() => _ListItemWidgetState();
+  State<GridItemWidget> createState() => _GridItemWidgetState();
 }
 
-class _ListItemWidgetState extends State<ListItemWidget> {
+class _GridItemWidgetState extends State<GridItemWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,13 +32,20 @@ class _ListItemWidgetState extends State<ListItemWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-              height: 100,
-              width: 100,
-              // color: Colors.amber,
-              decoration: BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.circular(50),
+            Neumorphic(
+              style: const NeumorphicStyle(
+                  shape: NeumorphicShape.concave,
+                  lightSource: LightSource.topLeft,
+                  intensity: 1,
+                  boxShape: NeumorphicBoxShape.circle()),
+              child: Container(
+                height: 100,
+                width: 100,
+                // color: Colors.amber,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(221, 173, 172, 172),
+                  borderRadius: BorderRadius.circular(50),
+                ),
               ),
             ),
             const SizedBox(
@@ -40,7 +54,7 @@ class _ListItemWidgetState extends State<ListItemWidget> {
             SizedBox(
               width: double.infinity,
               child: Text(
-                "Common Name",
+                widget.commonName,
                 style: commonNameFontStyle,
                 textAlign: TextAlign.center,
               ),
@@ -48,7 +62,7 @@ class _ListItemWidgetState extends State<ListItemWidget> {
             SizedBox(
               width: double.infinity,
               child: Text(
-                "Scientific Name",
+                widget.scientificName,
                 style: scientificNameFontStyle,
                 textAlign: TextAlign.center,
               ),
