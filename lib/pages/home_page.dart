@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                     right: 0,
                     top: 0,
                     child: NeumorphicButton(
-                      onPressed: (() => AuthProvider().signOut()),
+                      onPressed: () => AuthProvider().signOut(),
                       style: const NeumorphicStyle(
                         depth: 20,
                         intensity: 1,
@@ -61,7 +63,9 @@ class _HomePageState extends State<HomePage> {
               ),
               const HomePageTitleWidget(),
               /**********   Search Bar    ***********/
-              const SearchBarWidget(),
+              SearchBarWidget(
+                searchController: searchController,
+              ),
               const SizedBox(
                 height: 40,
               ),
@@ -88,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                             snapshot.data!;
                         floraList =
                             Provider.of<FloraProvider>(context).floraList;
-                        print(floraList[0].scientificName);
                       }
                       return GridView.builder(
                         itemCount: floraList.length,

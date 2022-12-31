@@ -12,6 +12,15 @@ class FloraProvider extends ChangeNotifier {
     _floraList = list;
   }
 
+  void applyFliter(String searchToken) {
+    if (searchToken.isNotEmpty) {
+      _floraList = _floraList.where((element) =>
+          element.commonName.contains(searchToken) ||
+          element.scientificName.contains(searchToken)) as List<FloraModal>;
+    }
+    notifyListeners();
+  }
+
   Stream<List<FloraModal>> readFlora() {
     return FirebaseFirestore.instance.collection('flora').snapshots().map(
           (snapshots) => snapshots.docs

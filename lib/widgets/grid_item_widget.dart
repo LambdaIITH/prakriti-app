@@ -49,18 +49,24 @@ class _GridItemWidgetState extends State<GridItemWidget> {
           children: [
             Neumorphic(
               style: const NeumorphicStyle(
-                  shape: NeumorphicShape.concave,
-                  lightSource: LightSource.topLeft,
-                  intensity: 1,
-                  boxShape: NeumorphicBoxShape.circle()),
+                shape: NeumorphicShape.concave,
+                lightSource: LightSource.topLeft,
+                intensity: 1,
+                depth: 20,    // added, check if it's good or not
+                boxShape: NeumorphicBoxShape.circle(),
+              ),
               child: Container(
                 height: 100,
                 width: 100,
                 // color: Colors.amber,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(221, 173, 172, 172),
-                  borderRadius: BorderRadius.circular(50),
-                ),
+                    color: const Color.fromARGB(221, 173, 172, 172),
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                      color: Colors.grey[200]!,
+                      style: BorderStyle.solid,
+                      width: 1.5,
+                    )),
                 child: Hero(
                   tag: "flora",
                   child: Image.network(

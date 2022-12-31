@@ -19,6 +19,17 @@ class _DescriptionPageState extends State<DescriptionPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: const Text("Descritpion"),
+          leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+              ),
+              onPressed: (() {
+                Navigator.of(context).pop();
+              })),
+        ),
         body: SizedBox(
           width: double.infinity,
           height: double.infinity,

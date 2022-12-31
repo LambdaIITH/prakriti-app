@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:prakriti_app/models/flora_model.dart';
+import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
+import 'package:provider/provider.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({super.key});
+  final TextEditingController searchController;
+
+  const SearchBarWidget({
+    required this.searchController,
+    super.key,
+  });
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  final _searchController = TextEditingController();
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _searchController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -40,8 +39,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               child: TextField(
                 cursorHeight: 24,
                 cursorColor: Colors.black,
-                controller: _searchController,
-                onChanged: ((value) {}), // Implement on change for search
+                controller: widget.searchController,
+                onChanged: (value) {
+                  Provider.of<FloraProvider>(context).applyFliter(value);
+                }, // Implement on change for search
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.all(8),
                   border: InputBorder.none,
@@ -54,8 +55,21 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         Container(
           padding: const EdgeInsets.all(8),
           child: NeumorphicButton(
-            child: const Icon(Icons.search),
-            onPressed: (() {}), // implement search functionality
+            onPressed: () {
+              if (widget.searchController.text.isNotEmpty) {
+                setState(() {
+                  widget.searchController.text = "";
+                });
+              } else {
+                Provider.of<FloraProvider>(context)
+                    .applyFliter(widget.searchController.text);
+              }
+            },
+            child: Icon(
+              widget.searchController.text.isEmpty
+                  ? Icons.search
+                  : Icons.close_rounded,
+            ), // implement search functionality
           ),
         )
       ],
