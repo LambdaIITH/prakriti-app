@@ -10,8 +10,14 @@ final subtitleFontStyle = GoogleFonts.raleway(
   fontSize: 24,
   fontWeight: FontWeight.w400,
 );
+
+final regularTitleFontStyle = GoogleFonts.raleway(
+  fontSize: 18,
+  fontWeight: FontWeight.w400,
+);
+
 final regularTextFontStyle = GoogleFonts.raleway(
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: FontWeight.w300,
 );
 

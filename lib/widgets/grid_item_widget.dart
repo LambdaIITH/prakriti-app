@@ -69,7 +69,7 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                   // ),
                 ),
                 child: Hero(
-                  tag: "flora",
+                  tag: UniqueKey(),
                   child: Image.network(
                     widget.imageUrl,
                     fit: BoxFit.cover,

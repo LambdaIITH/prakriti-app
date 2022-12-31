@@ -21,7 +21,7 @@ class InfoPointWidget extends StatelessWidget {
         children: [
           Text(
             label,
-            style: subtitleFontStyle,
+            style: regularTitleFontStyle,
           ),
           const SizedBox(
             width: 24,
