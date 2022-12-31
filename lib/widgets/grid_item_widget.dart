@@ -52,7 +52,7 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 shape: NeumorphicShape.concave,
                 lightSource: LightSource.topLeft,
                 intensity: 1,
-                depth: 20,    // added, check if it's good or not
+                depth: 20, // added, check if it's good or not
                 boxShape: NeumorphicBoxShape.circle(),
               ),
               child: Container(
@@ -60,13 +60,14 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 width: 100,
                 // color: Colors.amber,
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(221, 173, 172, 172),
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: Colors.grey[200]!,
-                      style: BorderStyle.solid,
-                      width: 1.5,
-                    )),
+                  color: const Color.fromARGB(221, 173, 172, 172),
+                  borderRadius: BorderRadius.circular(50),
+                  // border: Border.all(
+                  //   color: Colors.grey[200]!,
+                  //   style: BorderStyle.solid,
+                  //   width: 1.5,
+                  // ),
+                ),
                 child: Hero(
                   tag: "flora",
                   child: Image.network(

@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 import 'package:provider/provider.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController searchController;
+  Function reset;
 
-  const SearchBarWidget({
+  SearchBarWidget({
+    required this.reset,
     required this.searchController,
     super.key,
   });
@@ -37,11 +37,15 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               padding: const EdgeInsets.all(2),
               // width: double.infinity,
               child: TextField(
+                key: const ValueKey("123"),
                 cursorHeight: 24,
                 cursorColor: Colors.black,
                 controller: widget.searchController,
                 onChanged: (value) {
-                  Provider.of<FloraProvider>(context).applyFliter(value);
+                  Provider.of<FloraProvider>(
+                    context,
+                    listen: false,
+                  ).applyFliter(value);
                 }, // Implement on change for search
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.all(8),
@@ -58,11 +62,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             onPressed: () {
               if (widget.searchController.text.isNotEmpty) {
                 setState(() {
-                  widget.searchController.text = "";
+                  widget.searchController.clear();
+                  widget.reset();
                 });
-              } else {
-                Provider.of<FloraProvider>(context)
-                    .applyFliter(widget.searchController.text);
               }
             },
             child: Icon(

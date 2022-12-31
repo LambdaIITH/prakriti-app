@@ -16,7 +16,7 @@ class FloraProvider extends ChangeNotifier {
     if (searchToken.isNotEmpty) {
       _floraList = _floraList.where((element) =>
           element.commonName.contains(searchToken) ||
-          element.scientificName.contains(searchToken)) as List<FloraModal>;
+          element.scientificName.contains(searchToken)).toList();
     }
     notifyListeners();
   }

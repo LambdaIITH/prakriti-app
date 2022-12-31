@@ -26,9 +26,13 @@ class InfoPointWidget extends StatelessWidget {
           const SizedBox(
             width: 24,
           ),
-          Text(
-            data,
-            style: regularTextFontStyle,
+          Expanded(
+            child: Text(
+              data,
+              style: regularTextFontStyle,
+              softWrap: true,
+              maxLines: 100,
+            ),
           )
         ],
       ),

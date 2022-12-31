@@ -17,6 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final searchController = TextEditingController();
+  void reset() {
+    setState(() {
+      searchController.text = "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +70,7 @@ class _HomePageState extends State<HomePage> {
               /**********   Search Bar    ***********/
               SearchBarWidget(
                 searchController: searchController,
+                reset: reset,
               ),
               const SizedBox(
                 height: 40,
@@ -88,10 +94,22 @@ class _HomePageState extends State<HomePage> {
                       }
                       List<FloraModal> floraList = [];
                       if (snapshot.hasData) {
-                        Provider.of<FloraProvider>(context).setFloraList =
-                            snapshot.data!;
+                        Provider.of<FloraProvider>(
+                          context,
+                          listen: false,
+                        ).setFloraList = snapshot.data!;
                         floraList =
                             Provider.of<FloraProvider>(context).floraList;
+                        print("text : ${searchController.text}");
+                        if (searchController.text != "") {
+                          floraList = floraList
+                              .where((element) =>
+                                  element.commonName
+                                      .contains(searchController.text) ||
+                                  element.scientificName
+                                      .contains(searchController.text))
+                              .toList();
+                        }
                       }
                       return GridView.builder(
                         itemCount: floraList.length,
