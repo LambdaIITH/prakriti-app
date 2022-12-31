@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisCount: 2),
                         itemBuilder: ((context, index) {
                           return GridItemWidget(
+                            index: index,
                             commonName: floraList[index].commonName,
                             scientificName: floraList[index].scientificName,
                             imageUrl: floraList[index].imgUrl,

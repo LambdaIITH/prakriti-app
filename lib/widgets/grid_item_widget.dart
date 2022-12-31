@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:prakriti_app/pages/description_page.dart';
+import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
+import 'package:provider/provider.dart';
 
 class GridItemWidget extends StatefulWidget {
   final String commonName;
   final String scientificName;
   final String imageUrl;
+  final int index;
 
   const GridItemWidget({
     required this.commonName,
     required this.scientificName,
     required this.imageUrl,
+    required this.index,
     super.key,
   });
 
@@ -23,9 +28,17 @@ class _GridItemWidgetState extends State<GridItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (() {
-        /*
-          * Implement the geture detector  
-        */
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DescriptionPage(
+              flora: Provider.of<FloraProvider>(
+                context,
+                listen: false,
+              ).floraList[widget.index],
+            ),
+          ),
+        );
       }),
       child: Container(
         // height: 50,
@@ -45,12 +58,15 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 width: 100,
                 // color: Colors.amber,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(221, 173, 172, 172),
+                  color: const Color.fromARGB(221, 173, 172, 172),
                   borderRadius: BorderRadius.circular(50),
                 ),
-                child: Image.network(
-                  widget.imageUrl,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: "flora",
+                  child: Image.network(
+                    widget.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
