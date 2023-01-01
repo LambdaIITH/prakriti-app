@@ -52,7 +52,7 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 shape: NeumorphicShape.concave,
                 lightSource: LightSource.topLeft,
                 intensity: 1,
-                depth: 20, // added, check if it's good or not
+                depth: 20,  // added, check if it's good or not
                 boxShape: NeumorphicBoxShape.circle(),
               ),
               child: Container(

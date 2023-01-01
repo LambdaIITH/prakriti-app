@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import "package:flutter/material.dart";
+import 'package:image_picker/image_picker.dart';
 import 'package:prakriti_app/theme_data.dart';
 
 class AddFloraPage extends StatefulWidget {
@@ -10,6 +14,7 @@ class AddFloraPage extends StatefulWidget {
 
 class _AddFloraPageState extends State<AddFloraPage> {
   final _formKey = GlobalKey<FormState>();
+  XFile? file;
 
   Widget fieldWidget(String hint) {
     return Container(
@@ -89,7 +94,54 @@ class _AddFloraPageState extends State<AddFloraPage> {
           child: Column(
             children: [
               /************     Complete this SHIT !!! *******/
+              Container(
+                width: 200,
+                height: 200,
+                // decoration: BoxDecoration(
+                //   border: Border.all(
+                //     color: const Color.fromARGB(255, 238, 238, 238),
+                //     width: 5,
+                //     style: BorderStyle.solid,
+                //   ),
+                // ),
+                margin: const EdgeInsets.all(12),
+                // color: Colors.grey[50],
+                alignment: Alignment.topCenter,
+                child: SizedBox.expand(
+                  child: NeumorphicButton(
+                    padding: (file == null)
+                        ? const EdgeInsets.all(75)
+                        : const EdgeInsets.all(0),
+                    style: const NeumorphicStyle(
+                      boxShape: NeumorphicBoxShape.circle(),
+                      intensity: 1,
+                      lightSource: LightSource.topLeft,
+                      color: Color.fromARGB(255, 238, 238, 238),
+                    ),
+                    onPressed: (() async {
+                      ImagePicker imagePicker = ImagePicker();
 
+                      file = await imagePicker.pickImage(
+                          source: ImageSource.camera);
+                      setState(
+                        () {},
+                      );
+                    }),
+                    child: (file == null)
+                        ? const Icon(
+                            Icons.add_a_photo_rounded,
+                            color: Colors.black,
+                            size: 40,
+                          )
+                        : Image.file(
+                            File(file!.path),
+                            fit: BoxFit.cover,
+                            // height: 150,
+                            // width: 150,
+                          ),
+                  ),
+                ),
+              ),
               fieldWidget("Common Name"),
               fieldWidget("Scientific Name"),
               fieldWidget("Plant Type"),
