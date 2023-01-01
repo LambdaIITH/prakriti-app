@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
+import 'package:prakriti_app/pages/add_flora_page.dart';
 import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/widgets/grid_item_widget.dart';
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                     child: NeumorphicButton(
                       onPressed: () => AuthProvider().signOut(),
                       style: const NeumorphicStyle(
-                        depth: 20,
+                        // depth: 20,
                         intensity: 1,
                         lightSource: LightSource.topLeft,
                         boxShape: NeumorphicBoxShape.circle(),
@@ -64,6 +65,30 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: NeumorphicButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AddFloraPage(),
+                          ),
+                        );
+                      },
+                      style: const NeumorphicStyle(
+                        // depth: 20,
+                        intensity: 1,
+                        lightSource: LightSource.topLeft,
+                        boxShape: NeumorphicBoxShape.circle(),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
+                    ),
+                  )
                 ],
               ),
               const HomePageTitleWidget(),

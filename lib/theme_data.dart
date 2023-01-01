@@ -9,6 +9,7 @@ final titleFontStyle = GoogleFonts.alexBrush(
 final subtitleFontStyle = GoogleFonts.raleway(
   fontSize: 24,
   fontWeight: FontWeight.w400,
+  color: Colors.black,
 );
 
 final regularTitleFontStyle = GoogleFonts.raleway(
@@ -19,11 +20,13 @@ final regularTitleFontStyle = GoogleFonts.raleway(
 final regularTextFontStyle = GoogleFonts.raleway(
   fontSize: 18,
   fontWeight: FontWeight.w300,
+  color: Colors.black,
 );
 
 final commonNameFontStyle = GoogleFonts.raleway(
   fontSize: 16,
   fontWeight: FontWeight.w400,
+  color: Colors.black,
 );
 
 final scientificNameFontStyle = GoogleFonts.raleway(
