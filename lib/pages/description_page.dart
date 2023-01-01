@@ -98,7 +98,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
             ),
             InfoPointWidget(
               label: "Height : ",
-              data: "${widget.flora.minHeight}-${widget.flora.maxHeight}m",
+              data: widget.flora.height,
             ),
             InfoPointWidget(
               label: "Water needs : ",

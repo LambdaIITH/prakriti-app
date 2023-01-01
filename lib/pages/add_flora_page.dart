@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import "package:flutter/material.dart";
 import 'package:image_picker/image_picker.dart';
+import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/theme_data.dart';
 
 class AddFloraPage extends StatefulWidget {
@@ -15,11 +17,55 @@ class AddFloraPage extends StatefulWidget {
 class _AddFloraPageState extends State<AddFloraPage> {
   final _formKey = GlobalKey<FormState>();
   XFile? file;
+  String commonName = "";
+  String scientificName = "";
+  String plantType = "";
+  String plantFamily = "";
+  String exposure = "";
+  String seasonOfInterest = "";
+  String height = "";
+  String width = "";
+  String waterNeeds = "";
+  String soilType = "";
+  String soilPh = "";
+  String soilDrainage = "";
+  String characteristics = "";
+  String tolerance = "";
+  String imgUrl = "";
 
   Widget fieldWidget(String hint) {
     return Container(
       padding: const EdgeInsets.all(12),
       child: TextFormField(
+        onSaved: ((newValue) {
+          if (hint == "Common Name") {
+            commonName = newValue!;
+          } else if (hint == "Scientific Name") {
+            scientificName = newValue!;
+          } else if (hint == "Plant Type") {
+            plantType = newValue!;
+          } else if (hint == "Plant Family") {
+            plantFamily = newValue!;
+          } else if (hint == "Exposure") {
+            exposure = newValue!;
+          } else if (hint == "Season Of Interest") {
+            seasonOfInterest = newValue!;
+          } else if (hint == "Height") {
+            height = newValue!;
+          } else if (hint == "Water Needs") {
+            waterNeeds = newValue!;
+          } else if (hint == "Soil Type") {
+            soilType = newValue!;
+          } else if (hint == "Soil ph") {
+            soilPh = newValue!;
+          } else if (hint == "Soil Drainage") {
+            soilDrainage = newValue!;
+          } else if (hint == "Characteristics") {
+            characteristics = newValue!;
+          } else if (hint == "Tolerance") {
+            tolerance = newValue!;
+          }
+        }),
         validator: (value) {
           if (value == null || value.isEmpty) {
             return "Empty fields a re not allowed";
@@ -158,7 +204,63 @@ class _AddFloraPageState extends State<AddFloraPage> {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: (() {}),
+                  onPressed: (() async {
+                    if (_formKey.currentState!.validate() && file != null) {
+                      _formKey.currentState!.save();
+                      FloraModal newFlora = FloraModal(
+                        characteristics: characteristics,
+                        commonName: commonName,
+                        exposure: exposure,
+                        height: height,
+                        imgUrl: imgUrl,
+                        plantFamily: plantFamily,
+                        plantType: plantType,
+                        scientificName: scientificName,
+                        seasonOfInterest: seasonOfInterest,
+                        soilDrainage: soilDrainage,
+                        soilPh: soilPh,
+                        soilType: soilType,
+                        tolerance: tolerance,
+                        waterNeeds: waterNeeds,
+                        width: width,
+                      );
+                      Reference refRoot = FirebaseStorage.instance.ref();
+                      Reference refImgToUpload =
+                          refRoot.child(newFlora.scientificName);
+
+                      try {
+                        await refImgToUpload.putFile(File(file!.path));
+                        newFlora.imgUrl = await refImgToUpload.getDownloadURL();
+                        final docRef = await FirebaseFirestore.instance
+                            .collection("flora")
+                            .doc();
+                        await docRef.set(FloraModal.toMap(newFlora));
+
+                        // refImgToUpload
+                        //     .putFile(
+                        //   File(file!.path),
+                        // )
+                        //     .then((p0) {
+                        //   refImgToUpload.getDownloadURL().then((value) {
+                        //     print(value);
+                        //     newFlora.imgUrl = value;
+                        //   });
+                        // }).then((value) {
+                        //   final docRef = FirebaseFirestore.instance
+                        //       .collection("flora")
+                        //       .doc();
+                        //   print(FloraModal.toMap(newFlora));
+                        //   docRef
+                        //       .set(
+                        //         FloraModal.toMap(newFlora),
+                        //       )
+                        //       .then((value) => Navigator.pop(context));
+                        // });
+                      } catch (e) {
+                        print("Error : ${e.toString()}");
+                      }
+                    }
+                  }),
                   child: Text(
                     "Submit",
                     style: subtitleFontStyle,

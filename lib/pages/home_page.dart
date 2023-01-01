@@ -142,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
                         itemBuilder: ((context, index) {
+                          print(floraList[index].imgUrl);
                           return GridItemWidget(
                             index: index,
                             commonName: floraList[index].commonName,

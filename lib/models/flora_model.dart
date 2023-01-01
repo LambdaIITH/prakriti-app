@@ -5,8 +5,7 @@ class FloraModal {
   String plantFamily;
   String exposure;
   String seasonOfInterest;
-  String minHeight;
-  String maxHeight;
+  String height;
   String width;
   String waterNeeds;
   String soilType;
@@ -20,8 +19,7 @@ class FloraModal {
     required this.characteristics,
     required this.commonName,
     required this.exposure,
-    required this.minHeight,
-    required this.maxHeight,
+    required this.height,
     required this.plantFamily,
     required this.plantType,
     required this.scientificName,
@@ -35,14 +33,33 @@ class FloraModal {
     required this.imgUrl,
   });
 
+  static Map<String, dynamic> toMap(FloraModal model) {
+    return {
+      "commonName":model.commonName,
+      "characteristics": model.characteristics,
+      "exposure": model.exposure,
+      "height": model.height,
+      "plantFamily": model.plantFamily,
+      "plantType": model.plantType,
+      "scientificName": model.scientificName,
+      "seasonOfInterest": model.seasonOfInterest,
+      "soilDrainage": model.soilDrainage,
+      "soilPh": model.soilPh,
+      "soilType": model.soilType,
+      "tolerance": model.tolerance,
+      "waterNeeds": model.waterNeeds,
+      "width": model.width,
+      "imageUrl": model.imgUrl,
+    }; 
+  }
+
   static FloraModal fromJson(Map<String, dynamic> json) {
-    print("json : $json");
+    // print("json : $json");
     return FloraModal(
       characteristics: json["characteristics"].toString(),
       commonName: json["commonName"].toString(),
       exposure: json["exposure"].toString(),
-      minHeight: json["heightMin"].toString(),
-      maxHeight: json["heightMax"].toString(),
+      height: json["heightMin"].toString(),
       plantFamily: json["plantFamily"].toString(),
       plantType: json["plantType"].toString(),
       scientificName: json["scientificName"].toString(),
