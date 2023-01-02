@@ -14,6 +14,7 @@ class FloraModal {
   String characteristics;
   String tolerance;
   String imgUrl;
+  String id;
 
   FloraModal({
     required this.characteristics,
@@ -31,11 +32,12 @@ class FloraModal {
     required this.waterNeeds,
     required this.width,
     required this.imgUrl,
+    required this.id,
   });
 
   static Map<String, dynamic> toMap(FloraModal model) {
     return {
-      "commonName":model.commonName,
+      "commonName": model.commonName,
       "characteristics": model.characteristics,
       "exposure": model.exposure,
       "height": model.height,
@@ -50,10 +52,11 @@ class FloraModal {
       "waterNeeds": model.waterNeeds,
       "width": model.width,
       "imageUrl": model.imgUrl,
-    }; 
+      "id": DateTime.now().toIso8601String(),
+    };
   }
 
-  static FloraModal fromJson(Map<String, dynamic> json) {
+  static FloraModal fromJson(Map<String, dynamic> json, String id) {
     // print("json : $json");
     return FloraModal(
       characteristics: json["characteristics"].toString(),
@@ -71,6 +74,7 @@ class FloraModal {
       waterNeeds: json["waterNeeds"].toString(),
       width: json["width"].toString(),
       imgUrl: json["imageUrl"].toString(),
+      id: id,
     );
   }
 }

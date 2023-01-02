@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/pages/description_page.dart';
 import 'package:prakriti_app/providers/requests_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
@@ -11,7 +13,18 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
-  get label => null;
+  Future<void> addFlora(FloraModal model) async {
+    final docRef = await FirebaseFirestore.instance.collection('flora').doc();
+    docRef.set(
+      FloraModal.toMap(model),
+    );
+  }
+
+  Future<void> deleteFloraRequest(String id) async {
+    final docRef =
+        await FirebaseFirestore.instance.collection('requests').doc(id);
+    docRef.delete();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +51,15 @@ class _RequestsPageState extends State<RequestsPage> {
           if (snapshot.hasData && snapshot.data != null) {
             return ListView.builder(
               itemBuilder: (context, index) => ListTile(
-                leading: CircleAvatar(
-                  child: Hero(
-                    tag: 'flora',
-                    child: Image.network(
+                leading: Hero(
+                  tag: 'flora',
+                  child: CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: NetworkImage(
                       snapshot.data![index].imgUrl,
-                      fit: BoxFit.cover,
+                      // fit: BoxFit.cover,
                     ),
+                    backgroundColor: Colors.transparent,
                   ),
                 ),
                 title: Text(
@@ -69,14 +84,19 @@ class _RequestsPageState extends State<RequestsPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      onPressed: (() {}), // implement this
+                      onPressed: (() async {
+                        await addFlora(snapshot.data![index]);
+                        await deleteFloraRequest(snapshot.data![index].id);
+                      }), // implement this
                       icon: const Icon(
                         Icons.done,
                         color: Colors.black,
                       ),
                     ),
                     IconButton(
-                      onPressed: (() {}), // implement this
+                      onPressed: (() async {
+                        await deleteFloraRequest(snapshot.data![index].id);
+                      }), // implement this
                       icon: const Icon(
                         Icons.close,
                         color: Colors.black,

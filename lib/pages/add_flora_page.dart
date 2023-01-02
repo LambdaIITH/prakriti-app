@@ -223,6 +223,7 @@ class _AddFloraPageState extends State<AddFloraPage> {
                         tolerance: tolerance,
                         waterNeeds: waterNeeds,
                         width: width,
+                        id: DateTime.now().toIso8601String(),
                       );
                       Reference refRoot = FirebaseStorage.instance.ref();
                       Reference refImgToUpload =

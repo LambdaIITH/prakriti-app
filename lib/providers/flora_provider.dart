@@ -14,9 +14,11 @@ class FloraProvider extends ChangeNotifier {
 
   void applyFliter(String searchToken) {
     if (searchToken.isNotEmpty) {
-      _floraList = _floraList.where((element) =>
-          element.commonName.contains(searchToken) ||
-          element.scientificName.contains(searchToken)).toList();
+      _floraList = _floraList
+          .where((element) =>
+              element.commonName.contains(searchToken) ||
+              element.scientificName.contains(searchToken))
+          .toList();
     }
     notifyListeners();
   }
@@ -27,6 +29,7 @@ class FloraProvider extends ChangeNotifier {
               .map(
                 (e) => FloraModal.fromJson(
                   e.data(),
+                  e.id,
                 ),
               )
               .toList(),
