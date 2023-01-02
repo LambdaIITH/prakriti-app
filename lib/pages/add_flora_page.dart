@@ -231,33 +231,15 @@ class _AddFloraPageState extends State<AddFloraPage> {
                       try {
                         await refImgToUpload.putFile(File(file!.path));
                         newFlora.imgUrl = await refImgToUpload.getDownloadURL();
+                        // ignore: await_only_futures
                         final docRef = await FirebaseFirestore.instance
-                            .collection("flora")
+                            .collection("requests")
                             .doc();
                         await docRef.set(FloraModal.toMap(newFlora));
 
-                        // refImgToUpload
-                        //     .putFile(
-                        //   File(file!.path),
-                        // )
-                        //     .then((p0) {
-                        //   refImgToUpload.getDownloadURL().then((value) {
-                        //     print(value);
-                        //     newFlora.imgUrl = value;
-                        //   });
-                        // }).then((value) {
-                        //   final docRef = FirebaseFirestore.instance
-                        //       .collection("flora")
-                        //       .doc();
-                        //   print(FloraModal.toMap(newFlora));
-                        //   docRef
-                        //       .set(
-                        //         FloraModal.toMap(newFlora),
-                        //       )
-                        //       .then((value) => Navigator.pop(context));
-                        // });
                       } catch (e) {
                         print("Error : ${e.toString()}");
+                        /***********    Add error handeling here    ************/
                       }
                     }
                   }),
