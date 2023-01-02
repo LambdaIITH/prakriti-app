@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prakriti_app/models/flora_model.dart';
+import 'package:prakriti_app/pages/add_flora_page.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 import 'package:prakriti_app/widgets/info_point_widget.dart';
+import 'package:provider/provider.dart';
 
 class DescriptionPage extends StatefulWidget {
   final FloraModal flora;
@@ -20,6 +23,26 @@ class _DescriptionPageState extends State<DescriptionPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        actions: [
+          if (Provider.of<AuthProvider>(context).isAdmin)
+            IconButton(
+              onPressed: (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => AddFloraPage(
+                          model: widget.flora,
+                        )),
+                  ),
+                );
+              }),
+              icon: const Icon(
+                Icons.edit,
+                color: Colors.black,
+                size: 32,
+              ),
+            )
+        ],
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Container(

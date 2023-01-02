@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const AddFloraPage(),
+                                builder: (_) => AddFloraPage(model: null,),
                               ),
                             );
                           },

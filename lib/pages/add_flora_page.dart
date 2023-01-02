@@ -8,7 +8,11 @@ import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/theme_data.dart';
 
 class AddFloraPage extends StatefulWidget {
-  const AddFloraPage({super.key});
+  FloraModal? model;
+  AddFloraPage({
+    required this.model,
+    super.key,
+  });
 
   @override
   State<AddFloraPage> createState() => _AddFloraPageState();
@@ -33,10 +37,106 @@ class _AddFloraPageState extends State<AddFloraPage> {
   String tolerance = "";
   String imgUrl = "";
 
+  Future<void> submit() async {
+    if (_formKey.currentState!.validate() && file != null) {
+      _formKey.currentState!.save();
+      FloraModal newFlora = FloraModal(
+        characteristics: characteristics,
+        commonName: commonName,
+        exposure: exposure,
+        height: height,
+        imgUrl: imgUrl,
+        plantFamily: plantFamily,
+        plantType: plantType,
+        scientificName: scientificName,
+        seasonOfInterest: seasonOfInterest,
+        soilDrainage: soilDrainage,
+        soilPh: soilPh,
+        soilType: soilType,
+        tolerance: tolerance,
+        waterNeeds: waterNeeds,
+        width: width,
+        id: DateTime.now().toIso8601String(),
+      );
+      Reference refRoot = FirebaseStorage.instance.ref();
+      Reference refImgToUpload = refRoot.child(newFlora.scientificName);
+
+      try {
+        await refImgToUpload.putFile(File(file!.path));
+        newFlora.imgUrl = await refImgToUpload.getDownloadURL();
+        // ignore: await_only_futures
+        final docRef = FirebaseFirestore.instance.collection("requests").doc();
+        await docRef.set(FloraModal.toMap(newFlora));
+      } catch (e) {
+        print("Error : ${e.toString()}");
+        /***********    Add error handeling here    ************/
+      }
+    }
+  }
+
+  Future<void> update(FloraModal mod) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      FloraModal newFlora = FloraModal(
+        characteristics: characteristics,
+        commonName: commonName,
+        exposure: exposure,
+        height: height,
+        imgUrl: imgUrl,
+        plantFamily: plantFamily,
+        plantType: plantType,
+        scientificName: scientificName,
+        seasonOfInterest: seasonOfInterest,
+        soilDrainage: soilDrainage,
+        soilPh: soilPh,
+        soilType: soilType,
+        tolerance: tolerance,
+        waterNeeds: waterNeeds,
+        width: width,
+        id: mod.id,
+      );
+
+      await FirebaseFirestore.instance.collection('flora').doc(mod.id).set(
+            FloraModal.toMap(newFlora),
+          );
+    }
+  }
+
+  String? getInitialValue(String hint) {
+    if (hint == "Common Name") {
+      return widget.model?.commonName;
+    } else if (hint == "Scientific Name") {
+      return widget.model?.scientificName;
+    } else if (hint == "Plant Type") {
+      return widget.model?.plantType;
+    } else if (hint == "Plant Family") {
+      return widget.model?.plantFamily;
+    } else if (hint == "Exposure") {
+      return widget.model?.exposure;
+    } else if (hint == "Season Of Interest") {
+      return widget.model?.seasonOfInterest;
+    } else if (hint == "Height") {
+      return widget.model?.height;
+    } else if (hint == "Water Needs") {
+      return widget.model?.waterNeeds;
+    } else if (hint == "Soil Type") {
+      return widget.model?.soilType;
+    } else if (hint == "Soil ph") {
+      return widget.model?.soilPh;
+    } else if (hint == "Soil Drainage") {
+      return widget.model?.soilDrainage;
+    } else if (hint == "Characteristics") {
+      return widget.model?.characteristics;
+    } else if (hint == "Tolerance") {
+      return widget.model?.tolerance;
+    }
+  }
+
   Widget fieldWidget(String hint) {
     return Container(
       padding: const EdgeInsets.all(12),
       child: TextFormField(
+        initialValue: getInitialValue(hint),
         onSaved: ((newValue) {
           if (hint == "Common Name") {
             commonName = newValue!;
@@ -143,21 +243,14 @@ class _AddFloraPageState extends State<AddFloraPage> {
               Container(
                 width: 200,
                 height: 200,
-                // decoration: BoxDecoration(
-                //   border: Border.all(
-                //     color: const Color.fromARGB(255, 238, 238, 238),
-                //     width: 5,
-                //     style: BorderStyle.solid,
-                //   ),
-                // ),
                 margin: const EdgeInsets.all(12),
-                // color: Colors.grey[50],
                 alignment: Alignment.topCenter,
                 child: SizedBox.expand(
                   child: NeumorphicButton(
-                    padding: (file == null)
+                    padding: (file == null && widget.model?.imgUrl == null)
                         ? const EdgeInsets.all(75)
                         : const EdgeInsets.all(0),
+                    // margin: const EdgeInsets.all(50),
                     style: const NeumorphicStyle(
                       boxShape: NeumorphicBoxShape.circle(),
                       intensity: 1,
@@ -173,18 +266,25 @@ class _AddFloraPageState extends State<AddFloraPage> {
                         () {},
                       );
                     }),
-                    child: (file == null)
+                    child: (file == null && widget.model?.imgUrl == null)
                         ? const Icon(
                             Icons.add_a_photo_rounded,
                             color: Colors.black,
                             size: 40,
                           )
-                        : Image.file(
-                            File(file!.path),
-                            fit: BoxFit.cover,
-                            // height: 150,
-                            // width: 150,
-                          ),
+                        : (file != null)
+                            ? Image.file(
+                                File(file!.path),
+                                fit: BoxFit.cover,
+                                // height: 150,
+                                // width: 150,
+                              )
+                            : Image.network(
+                                widget.model!.imgUrl,
+                                fit: BoxFit.cover,
+                                // height: 250,
+                                // width: 250,
+                              ),
                   ),
                 ),
               ),
@@ -205,47 +305,14 @@ class _AddFloraPageState extends State<AddFloraPage> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: (() async {
-                    if (_formKey.currentState!.validate() && file != null) {
-                      _formKey.currentState!.save();
-                      FloraModal newFlora = FloraModal(
-                        characteristics: characteristics,
-                        commonName: commonName,
-                        exposure: exposure,
-                        height: height,
-                        imgUrl: imgUrl,
-                        plantFamily: plantFamily,
-                        plantType: plantType,
-                        scientificName: scientificName,
-                        seasonOfInterest: seasonOfInterest,
-                        soilDrainage: soilDrainage,
-                        soilPh: soilPh,
-                        soilType: soilType,
-                        tolerance: tolerance,
-                        waterNeeds: waterNeeds,
-                        width: width,
-                        id: DateTime.now().toIso8601String(),
-                      );
-                      Reference refRoot = FirebaseStorage.instance.ref();
-                      Reference refImgToUpload =
-                          refRoot.child(newFlora.scientificName);
-
-                      try {
-                        await refImgToUpload.putFile(File(file!.path));
-                        newFlora.imgUrl = await refImgToUpload.getDownloadURL();
-                        // ignore: await_only_futures
-                        final docRef = await FirebaseFirestore.instance
-                            .collection("requests")
-                            .doc();
-                        await docRef.set(FloraModal.toMap(newFlora));
-
-                      } catch (e) {
-                        print("Error : ${e.toString()}");
-                        /***********    Add error handeling here    ************/
-                      }
+                    if (widget.model == null) {
+                      await submit();
+                    } else {
+                      await update(widget.model!);
                     }
                   }),
                   child: Text(
-                    "Submit",
+                    (widget.model == null) ? "Submit" : "Done",
                     style: subtitleFontStyle,
                   ),
                 ),
