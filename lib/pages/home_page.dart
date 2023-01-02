@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           style: const NeumorphicStyle(
                             // depth: 20,
+                            color: Color.fromARGB(255, 238, 238, 238),
                             intensity: 1,
                             lightSource: LightSource.topLeft,
                             boxShape: NeumorphicBoxShape.circle(),
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           style: const NeumorphicStyle(
                             // depth: 20,
+                            color: Color.fromARGB(255, 238, 238, 238),
                             intensity: 1,
                             lightSource: LightSource.topLeft,
                             boxShape: NeumorphicBoxShape.circle(),

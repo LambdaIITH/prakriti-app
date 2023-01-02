@@ -59,6 +59,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         Container(
           padding: const EdgeInsets.all(8),
           child: NeumorphicButton(
+            style: const NeumorphicStyle(
+              color: Color.fromARGB(255, 238, 238, 238),
+              boxShape: NeumorphicBoxShape.circle(),
+              intensity: 1,
+              depth: 10,
+            ),
             onPressed: () {
               if (widget.searchController.text.isNotEmpty) {
                 setState(() {
