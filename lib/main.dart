@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => FloraProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => AuthProvider()),
         )
       ],
       child: MaterialApp(

@@ -39,18 +39,9 @@ class _AuthPageState extends State<AuthPage> {
     required String email,
     required String passwd,
   }) async {
-    AuthProvider()
-        .signInWithEmailAndPassword(
+    AuthProvider().signInWithEmailAndPassword(
       email: email,
       passwd: passwd,
-    )
-        .then(
-      (value) async {
-        FirebaseFirestore.instance.collection("users").doc(email).get().then(
-              (value) => isAdmin = value.data()?.values.toString() == 'admin',
-            );
-        // print(role);
-      },
     );
   }
 

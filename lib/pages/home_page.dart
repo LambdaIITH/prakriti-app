@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
@@ -23,6 +24,33 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       searchController.text = "";
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    searchController.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // print("data :}");
+  }
+
+  @override
+  void didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    String? email = AuthProvider().currentUser?.email;  
+    /********************** 
+     * Admin Details here * 
+     **********************/
+    if (email == "ep20btech11025@iith.ac.in") {
+      Provider.of<AuthProvider>(context).isAdmin = true;
+    }
   }
 
   @override
@@ -96,27 +124,31 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           width: 24,
                         ),
-                        NeumorphicButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const RequestsPage(),
-                              ),
-                            );
-                          },
-                          style: const NeumorphicStyle(
-                            // depth: 20,
-                            color: Color.fromARGB(255, 238, 238, 238),
-                            intensity: 1,
-                            lightSource: LightSource.topLeft,
-                            boxShape: NeumorphicBoxShape.circle(),
-                          ),
-                          child: const Icon(
-                            Icons.library_add,
-                            size: 30,
-                          ),
-                        )
+                        if (Provider.of<AuthProvider>(
+                          context,
+                          // listen: false,
+                        ).isAdmin)
+                          NeumorphicButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const RequestsPage(),
+                                ),
+                              );
+                            },
+                            style: const NeumorphicStyle(
+                              // depth: 20,
+                              color: Color.fromARGB(255, 238, 238, 238),
+                              intensity: 1,
+                              lightSource: LightSource.topLeft,
+                              boxShape: NeumorphicBoxShape.circle(),
+                            ),
+                            child: const Icon(
+                              Icons.library_add,
+                              size: 30,
+                            ),
+                          )
                       ],
                     ),
                   ),
