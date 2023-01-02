@@ -2,6 +2,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/pages/add_flora_page.dart';
+import 'package:prakriti_app/pages/requests_page.dart';
 import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/widgets/grid_item_widget.dart';
@@ -68,27 +69,55 @@ class _HomePageState extends State<HomePage> {
                   Positioned(
                     top: 0,
                     left: 0,
-                    child: NeumorphicButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const AddFloraPage(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        NeumorphicButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const AddFloraPage(),
+                              ),
+                            );
+                          },
+                          style: const NeumorphicStyle(
+                            // depth: 20,
+                            intensity: 1,
+                            lightSource: LightSource.topLeft,
+                            boxShape: NeumorphicBoxShape.circle(),
                           ),
-                        );
-                      },
-                      style: const NeumorphicStyle(
-                        // depth: 20,
-                        intensity: 1,
-                        lightSource: LightSource.topLeft,
-                        boxShape: NeumorphicBoxShape.circle(),
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        size: 30,
-                      ),
+                          child: const Icon(
+                            Icons.add,
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 24,
+                        ),
+                        NeumorphicButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RequestsPage(),
+                              ),
+                            );
+                          },
+                          style: const NeumorphicStyle(
+                            // depth: 20,
+                            intensity: 1,
+                            lightSource: LightSource.topLeft,
+                            boxShape: NeumorphicBoxShape.circle(),
+                          ),
+                          child: const Icon(
+                            Icons.library_add,
+                            size: 30,
+                          ),
+                        )
+                      ],
                     ),
-                  )
+                  ),
                 ],
               ),
               const HomePageTitleWidget(),
