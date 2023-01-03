@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:prakriti_app/models/flora_model.dart';
@@ -38,19 +37,21 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     // print("data :}");
-  }
 
-  @override
-  void didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    String? email = AuthProvider().currentUser?.email;  
+    String? email = AuthProvider().currentUser?.email;
     /********************** 
      * Admin Details here * 
      **********************/
     if (email == "ep20btech11025@iith.ac.in") {
-      Provider.of<AuthProvider>(context).isAdmin = true;
+      print("WELCOME ADMIN");
+      Provider.of<AuthProvider>(context,listen: false).isAdmin = true;
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -105,7 +106,9 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => AddFloraPage(model: null,),
+                                builder: (_) => AddFloraPage(
+                                  model: null,
+                                ),
                               ),
                             );
                           },
@@ -124,31 +127,27 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           width: 24,
                         ),
-                        if (Provider.of<AuthProvider>(
-                          context,
-                          // listen: false,
-                        ).isAdmin)
-                          NeumorphicButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const RequestsPage(),
-                                ),
-                              );
-                            },
-                            style: const NeumorphicStyle(
-                              // depth: 20,
-                              color: Color.fromARGB(255, 238, 238, 238),
-                              intensity: 1,
-                              lightSource: LightSource.topLeft,
-                              boxShape: NeumorphicBoxShape.circle(),
-                            ),
-                            child: const Icon(
-                              Icons.library_add,
-                              size: 30,
-                            ),
-                          )
+                        NeumorphicButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RequestsPage(),
+                              ),
+                            );
+                          },
+                          style: const NeumorphicStyle(
+                            // depth: 20,
+                            color: Color.fromARGB(255, 238, 238, 238),
+                            intensity: 1,
+                            lightSource: LightSource.topLeft,
+                            boxShape: NeumorphicBoxShape.circle(),
+                          ),
+                          child: const Icon(
+                            Icons.library_add,
+                            size: 30,
+                          ),
+                        )
                       ],
                     ),
                   ),

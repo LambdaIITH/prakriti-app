@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:prakriti_app/models/flora_model.dart';
+import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 
 class AddFloraPage extends StatefulWidget {
@@ -65,8 +66,23 @@ class _AddFloraPageState extends State<AddFloraPage> {
         await refImgToUpload.putFile(File(file!.path));
         newFlora.imgUrl = await refImgToUpload.getDownloadURL();
         // ignore: await_only_futures
-        final docRef = FirebaseFirestore.instance.collection("requests").doc();
-        await docRef.set(FloraModal.toMap(newFlora));
+        /**
+         * Changed the collection route here for submitting new requests
+         */
+        Map<String, dynamic> json = FloraModal.toMap(newFlora);
+        String? currentUserEmail = AuthProvider().currentUser!.email;
+        json['email'] = currentUserEmail;
+
+        final docRef = FirebaseFirestore.instance
+            .collection("requests")
+            .doc(currentUserEmail)
+            .collection('userRequests')
+            .doc(newFlora.scientificName);
+        await docRef.set(json);
+        await FirebaseFirestore.instance
+            .collection("adminRequests")
+            .doc()
+            .set(json);
       } catch (e) {
         print("Error : ${e.toString()}");
         /***********    Add error handeling here    ************/
@@ -239,7 +255,7 @@ class _AddFloraPageState extends State<AddFloraPage> {
           key: _formKey,
           child: Column(
             children: [
-              /************     Complete this SHIT !!! *******/
+              /************ Complete this SHIT !!! *******/
               Container(
                 width: 200,
                 height: 200,

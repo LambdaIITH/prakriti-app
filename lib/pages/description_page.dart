@@ -95,7 +95,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               width: double.maxFinite,
               height: MediaQuery.of(context).size.height * 0.4,
               child: Hero(
-                tag: "flora",
+                tag: widget.flora.scientificName,
                 child: Image.network(
                   widget.flora.imgUrl,
                 ),
