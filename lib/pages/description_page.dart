@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/pages/add_flora_page.dart';
@@ -18,6 +19,10 @@ class DescriptionPage extends StatefulWidget {
 }
 
 class _DescriptionPageState extends State<DescriptionPage> {
+  Future<void> deleteItem(String id) async {
+    await FirebaseFirestore.instance.collection('flora').doc(id).delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +43,19 @@ class _DescriptionPageState extends State<DescriptionPage> {
               }),
               icon: const Icon(
                 Icons.edit,
+                color: Colors.black,
+                size: 32,
+              ),
+            ),
+          if (Provider.of<AuthProvider>(context).isAdmin)
+            IconButton(
+              onPressed: (() async {
+                deleteItem(widget.flora.id);
+                /*********** Add proper error handeling if the itemis not deleted  *************/
+                Navigator.pop(context);
+              }),
+              icon: const Icon(
+                Icons.delete_forever,
                 color: Colors.black,
                 size: 32,
               ),
