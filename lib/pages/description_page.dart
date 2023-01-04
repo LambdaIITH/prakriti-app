@@ -73,7 +73,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
           width: double.infinity,
           child: Text(
             "Descritpion",
-            style: titleFontStyle,
+            style: subtitleFontStyle,
             textAlign: TextAlign.center,
           ),
         ),

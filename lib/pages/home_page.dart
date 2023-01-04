@@ -36,23 +36,19 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // print("data :}");
-
     String? email = AuthProvider().currentUser?.email;
     /********************** 
      * Admin Details here * 
      **********************/
     if (email == "ep20btech11025@iith.ac.in") {
       print("WELCOME ADMIN");
-      Provider.of<AuthProvider>(context,listen: false).isAdmin = true;
+      Provider.of<AuthProvider>(
+        context,
+        listen: false,
+      ).isAdmin = true;
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
