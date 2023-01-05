@@ -3,6 +3,7 @@ import 'package:prakriti_app/providers/flora_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController searchController;
   Function reset;

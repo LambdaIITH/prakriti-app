@@ -8,6 +8,7 @@ import 'package:prakriti_app/models/flora_model.dart';
 import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 
+// ignore: must_be_immutable
 class AddFloraPage extends StatefulWidget {
   FloraModal? model;
   AddFloraPage({
@@ -85,7 +86,7 @@ class _AddFloraPageState extends State<AddFloraPage> {
             .doc()
             .set(json);
       } catch (e) {
-        print("Error : ${e.toString()}");
+        // print("Error : ${e.toString()}");
         /***********    Add error handeling here    ************/
       }
     }
@@ -147,6 +148,7 @@ class _AddFloraPageState extends State<AddFloraPage> {
     } else if (hint == "Tolerance") {
       return widget.model?.tolerance;
     }
+    return null;
   }
 
   Widget fieldWidget(String hint) {

@@ -148,7 +148,10 @@ class _RequestsPageState extends State<RequestsPage> {
                               try {
                                 await refToImgDelete.delete();
                               } catch (e) {
-                                print(e.toString());
+                                // print(e.toString());
+                                /***************************
+                                 * Error Handeling Pending *
+                                 ***************************/
                               }
                             }), // implement this
                             icon: const Icon(

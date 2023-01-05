@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:prakriti_app/models/flora_model.dart';
-import 'package:prakriti_app/models/user_model.dart';
 
 class FloraProvider extends ChangeNotifier {
   List<FloraModal> _floraList = [];

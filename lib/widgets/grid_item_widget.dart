@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:prakriti_app/pages/description_page.dart';
 import 'package:prakriti_app/providers/flora_provider.dart';

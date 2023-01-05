@@ -27,21 +27,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     searchController.dispose();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     String? email = AuthProvider().currentUser?.email;
     /********************** 
      * Admin Details here * 
      **********************/
     if (email == "ep20btech11025@iith.ac.in") {
-      print("WELCOME ADMIN");
+      // print("WELCOME ADMIN");
       Provider.of<AuthProvider>(
         context,
         listen: false,
@@ -183,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                         ).setFloraList = snapshot.data!;
                         floraList =
                             Provider.of<FloraProvider>(context).floraList;
-                        print("text : ${searchController.text}");
+                        // print("text : ${searchController.text}");
                         if (searchController.text != "") {
                           floraList = floraList
                               .where((element) =>
@@ -200,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
                         itemBuilder: ((context, index) {
-                          print(floraList[index].imgUrl);
+                          // print(floraList[index].imgUrl);
                           return GridItemWidget(
                             index: index,
                             commonName: floraList[index].commonName,
