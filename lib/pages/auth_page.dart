@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:prakriti_app/providers/auth_provider.dart';
 import 'package:prakriti_app/theme_data.dart';
 
@@ -24,49 +23,56 @@ class _AuthPageState extends State<AuthPage> {
     required String email,
     required String passwd,
   }) async {
-    AuthProvider()
-        .createUserWithEmailAndPassword(
-      email: email,
-      passwd: passwd,
-    )
-        .onError((error, stackTrace) {
+    try {
+      await AuthProvider()
+          .createUserWithEmailAndPassword(
+            email: email,
+            passwd: passwd,
+          )
+          .then(
+            (value) =>
+                FirebaseFirestore.instance.collection("users").doc(email).set(
+              {
+                "role": "user",
+              },
+            ),
+          );
+    } on FirebaseAuthException catch (error) {
+      int index = error.toString().indexOf(' ');
       final snackBar = SnackBar(
         content: Text(
-          error.toString(),
+          error.toString().substring(index),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }).then(
-      (value) => FirebaseFirestore.instance.collection("users").doc(email).set(
-        {
-          "role": "user",
-        },
-      ),
-    );
+    }
   }
 
   Future<void> logIn({
     required String email,
     required String passwd,
   }) async {
-    AuthProvider()
-        .signInWithEmailAndPassword(
-      email: email,
-      passwd: passwd,
-    )
-        .onError((error, stackTrace) {
+    try {
+      await AuthProvider().signInWithEmailAndPassword(
+        email: email,
+        passwd: passwd,
+      );
+    } on FirebaseAuthException catch (error) {
+      int index = error.toString().indexOf(' ');
+      // print(er);
       final snackBar = SnackBar(
         content: Text(
-          error.toString(),
+          error.toString().substring(index),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -81,28 +87,36 @@ class _AuthPageState extends State<AuthPage> {
                   const Spacer(),
                   Text(
                     "Prakriti",
-                    style: titleFontStyle,
+                    style: GoogleFonts.alexBrush(
+                      fontSize: 64,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
                   ),
                   const SizedBox(
                     height: 40,
                   ),
                   Neumorphic(
+                    padding: const EdgeInsets.all(4),
                     style: NeumorphicStyle(
                       shape: NeumorphicShape.flat,
                       boxShape: NeumorphicBoxShape.roundRect(
                         BorderRadius.circular(24),
                       ),
-                      depth: 5,
+                      depth: 2.5,
                       intensity: 1,
                       lightSource: LightSource.topLeft,
                       color: Colors.grey[200],
                     ),
                     child: TextFormField(
-                      cursorColor: Colors.black87,
+                      cursorColor: Colors.grey[600],
+                      cursorHeight: 30,
                       style: regularTextFontStyle,
                       decoration: InputDecoration(
+                        errorBorder: InputBorder.none,
+                        errorStyle: errorFontStyle,
                         contentPadding: const EdgeInsets.all(8),
-                        hintStyle: regularTextFontStyle,
+                        hintStyle: hintFontStyle,
                         border: InputBorder.none,
                         hintText: "e-mail",
                       ),
@@ -119,20 +133,27 @@ class _AuthPageState extends State<AuthPage> {
                     height: 20,
                   ),
                   Neumorphic(
+                    padding: const EdgeInsets.all(4),
                     style: NeumorphicStyle(
                       shape: NeumorphicShape.flat,
                       boxShape: NeumorphicBoxShape.roundRect(
                         BorderRadius.circular(24),
                       ),
-                      depth: 5,
+                      depth: 2.5,
                       intensity: 1,
                       lightSource: LightSource.topLeft,
                       color: Colors.grey[200],
                     ),
                     child: TextFormField(
+                      cursorColor: Colors.grey[600],
+                      cursorHeight: 30,
                       obscureText: true,
-                      cursorColor: Colors.black87,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        errorBorder: InputBorder.none,
+                        errorStyle: errorFontStyle,
+                        contentPadding: const EdgeInsets.all(8),
+                        hintStyle: hintFontStyle,
+                        border: InputBorder.none,
                         hintText: "password",
                       ),
                       validator: (value) {
@@ -144,19 +165,41 @@ class _AuthPageState extends State<AuthPage> {
                       onSaved: (newValue) => passwd = newValue!,
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   if (newUser)
-                    TextFormField(
-                      obscureText: true,
-                      cursorColor: Colors.black87,
-                      decoration: const InputDecoration(
-                        hintText: "confirm password",
+                    Neumorphic(
+                      padding: const EdgeInsets.all(4),
+                      style: NeumorphicStyle(
+                        shape: NeumorphicShape.flat,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(24),
+                        ),
+                        depth: 2.5,
+                        intensity: 1,
+                        lightSource: LightSource.topLeft,
+                        color: Colors.grey[200],
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter e-mail here";
-                        }
-                        return null;
-                      },
+                      child: TextFormField(
+                        cursorColor: Colors.grey[600],
+                        cursorHeight: 30,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          errorBorder: InputBorder.none,
+                          errorStyle: errorFontStyle,
+                          contentPadding: const EdgeInsets.all(8),
+                          hintStyle: hintFontStyle,
+                          border: InputBorder.none,
+                          hintText: "confirm password",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter e-mail here";
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   const SizedBox(
                     height: 20,

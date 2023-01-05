@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -16,20 +15,28 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String passwd,
   }) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
-      email: email,
-      password: passwd,
-    );
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: passwd,
+      );
+    } on FirebaseAuthException {
+      rethrow;
+    }
   }
 
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String passwd,
   }) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: passwd,
-    );
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: passwd,
+      );
+    } on FirebaseAuthException {
+      rethrow;
+    }
   }
 
   Future<void> signOut() async {

@@ -29,6 +29,16 @@ final commonNameFontStyle = GoogleFonts.raleway(
   color: Colors.black,
 );
 
+final errorFontStyle = GoogleFonts.raleway(
+  fontSize: 12,
+  color: Colors.red[600],
+);
+
+final hintFontStyle = GoogleFonts.raleway(
+  fontSize: 18,
+  color: Colors.black54,
+);
+
 final scientificNameFontStyle = GoogleFonts.raleway(
   fontSize: 16,
   fontWeight: FontWeight.w300,
