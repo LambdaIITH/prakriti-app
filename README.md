@@ -3,14 +3,24 @@
 A new Flutter project.
 
 ## Getting Started
+Please refer to the [Flutter docs](https://docs.flutter.dev/get-started/install) for setting flutter
 
-This project is a starting point for a Flutter application.
+after you have installed the sdk using the docs run
+```
+Flutter doctor
+```
+and install all other required software which are asked.
 
-A few resources to get you started if this is your first Flutter project:
+Now to run the app you can either use your own device [USB debugging](https://www.youtube.com/watch?v=W7nkxS9LMXs&ab_channel=OnlineTechTips)
+or 
+#### If you only want the apk then you can find it in /apk
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+```
+git clone https://github.com/Vaibhav-Ramola/prakriti-app
+```
+```
+cd prakriti-app
+Flutter run
+```
