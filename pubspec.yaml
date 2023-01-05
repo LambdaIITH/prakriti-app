@@ -37,7 +37,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
-  http: ^0.13.5
   google_fonts: ^3.0.1
   glassmorphism: ^3.0.0
   flutter_neumorphic: ^3.2.0
@@ -73,6 +72,7 @@ flutter:
   assets:
     - assets/animations/loading.json
     - assets/animations/password_screen_background.json
+    - assets/images/placeholder_image_flora.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

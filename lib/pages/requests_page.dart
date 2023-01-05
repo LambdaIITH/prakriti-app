@@ -18,8 +18,6 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
-
-
   Future<void> addFlora(FloraModal model) async {
     final docRef = FirebaseFirestore.instance.collection('flora').doc();
     await docRef.set(
@@ -80,14 +78,27 @@ class _RequestsPageState extends State<RequestsPage> {
               itemBuilder: (context, index) => ListTile(
                 leading: Hero(
                   tag: snapshot.data![index].model.scientificName,
-                  child: CircleAvatar(
-                    radius: 30.0,
-                    backgroundImage: NetworkImage(
-                      snapshot.data![index].model.imgUrl,
-                      // fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: FadeInImage.assetNetwork(
+                        placeholder:
+                            'assets/images/placeholder_image_flora.png',
+                        image: snapshot.data![index].model.imgUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    backgroundColor: Colors.transparent,
                   ),
+                  // child: CircleAvatar(
+                  //   radius: 30.0,
+                  //   backgroundImage: NetworkImage(
+                  //     snapshot.data![index].model.imgUrl,
+                  //     // fit: BoxFit.cover,
+                  //   ),
+                  //   backgroundColor: Colors.transparent,
+                  // ),
                 ),
                 title: Text(
                   snapshot.data![index].model.commonName,

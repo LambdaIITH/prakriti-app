@@ -21,6 +21,7 @@ class AddFloraPage extends StatefulWidget {
 
 class _AddFloraPageState extends State<AddFloraPage> {
   final _formKey = GlobalKey<FormState>();
+  bool _loading = false;
   XFile? file;
   String commonName = "";
   String scientificName = "";
@@ -321,16 +322,28 @@ class _AddFloraPageState extends State<AddFloraPage> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: (() async {
+                    setState(() {
+                      _loading = true;
+                    });
                     if (widget.model == null) {
                       await submit();
                     } else {
                       await update(widget.model!);
                     }
+                    setState(() {
+                      _loading = false;
+                    });
                   }),
-                  child: Text(
-                    (widget.model == null) ? "Submit" : "Done",
-                    style: subtitleFontStyle,
-                  ),
+                  child: (_loading)
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+                      : Text(
+                          (widget.model == null) ? "Submit" : "Done",
+                          style: subtitleFontStyle,
+                        ),
                 ),
               ),
             ],

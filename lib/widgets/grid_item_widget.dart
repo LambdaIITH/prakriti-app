@@ -52,7 +52,7 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 shape: NeumorphicShape.concave,
                 lightSource: LightSource.topLeft,
                 intensity: 1,
-                depth: 20,  // added, check if it's good or not
+                depth: 20, // added, check if it's good or not
                 boxShape: NeumorphicBoxShape.circle(),
               ),
               child: Container(
@@ -70,8 +70,9 @@ class _GridItemWidgetState extends State<GridItemWidget> {
                 ),
                 child: Hero(
                   tag: widget.scientificName,
-                  child: Image.network(
-                    widget.imageUrl,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder_image_flora.png',
+                    image: widget.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
