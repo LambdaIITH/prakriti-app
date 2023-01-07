@@ -16,7 +16,7 @@ or
 #### If you only want the apk
 In the project directory
 ```
-cd build/app/outputs/flutter-apk/
+cd APK/
 ```
 It's named app-debug.apk
 
