@@ -18,6 +18,7 @@ class _AuthPageState extends State<AuthPage> {
   final _formKey = GlobalKey<FormState>();
   bool newUser = false;
   bool isAdmin = false;
+  late AuthProvider auth;
 
   Future<void> signUp({
     required String email,
@@ -67,6 +68,18 @@ class _AuthPageState extends State<AuthPage> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
