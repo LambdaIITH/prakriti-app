@@ -37,8 +37,10 @@ Flutter run
 ```
 
 ### Screen Shots
-<img src='screenshots/Auth_page_1.png' height='500'>
-<img src='screenshots/Auth_page_2.png' height='500'>
-<img src='screenshots/Description_page.png' height='500'>
-<img src='screenshots/Home_screen.png' height='500'>
-<img src='screenshots/search_in_home_page.png' height='500'>
+<div style='display:flex'>
+    <img src='screenshots/Auth_page_1.png' height='500'>
+    <img src='screenshots/Auth_page_2.png' height='500'>
+    <img src='screenshots/Description_page.png' height='500'>
+    <img src='screenshots/Home_screen.png' height='500'>
+    <img src='screenshots/search_in_home_page.png' height='500'>
+</div>
