@@ -37,8 +37,8 @@ Flutter run
 ```
 
 ### Screen Shots
-![Auth Page Login](screenshots/Auth_page_1.png){height=500px}
-![Auth Page SignUp](screenshots/Auth_page_2.png){height=500px}
-![Home Screen](screenshots/Home_screen.png){height=500px}
-![Description Page](screenshots/Description_page.png){height=500px}
-![Searching ](screenshots/search_in_home_page.png){height=500px}
+<img src='screenshots/Auth_page_1.png' height='500'>
+<img src='screenshots/Auth_page_2.png' height='500'>
+<img src='screenshots/Description_page.png' height='500'>
+<img src='screenshots/Home_screen.png' height='500'>
+<img src='screenshots/search_in_home_page.png' height='500'>
