@@ -1,46 +1,22 @@
-# prakriti_app
+# EOSH23
 
-A new Flutter project.
+## Prakriti App
+
+A Flutter based project to catalogue and view all the flora and fauna in IIT-H ecosystem
+
+## Tech Stack
+* Flutter
+* Firebase
 
 ## Getting Started
-Please refer to the [Flutter docs](https://docs.flutter.dev/get-started/install) for setting flutter
 
-after you have installed the sdk using the docs run
-```
-Flutter doctor
-```
-and install all other required software which are asked.
+- [Setup Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
+- [Setup Flutter and Android Studio](https://docs.flutter.dev/get-started/install)
+- [Setting up Vs Code for Flutter](https://docs.flutter.dev/development/tools/vs-code)
 
-Now to run the app you can either use your own device [USB debugging](https://www.youtube.com/watch?v=W7nkxS9LMXs&ab_channel=OnlineTechTips)
-or 
-#### If you only want the apk
-In the project directory
-```
-cd APK/
-```
-It's named app-debug.apk
+## Local Setup
+- Fork the repo
+- Clone it to your local setup using the command `git clone <repo link>`
+- Open the project using VS-Code or Android Studio
 
-### To get the project to your your local machine
-
-```
-git clone https://github.com/Vaibhav-Ramola/prakriti-app
-```
-```
-cd prakriti-app
-```
-
-Before running the app make sure your IDE detects your emulator/device
-To run the project, in the project directory run
-
-```
-Flutter run
-```
-
-### Screen Shots
-<div style='display:flex'>
-    <img src='screenshots/Auth_page_1.png' height='500'>
-    <img src='screenshots/Auth_page_2.png' height='500'>
-    <img src='screenshots/Description_page.png' height='500'>
-    <img src='screenshots/Home_screen.png' height='500'>
-    <img src='screenshots/search_in_home_page.png' height='500'>
-</div>
+Before cloning the project make sure you have set up the IDE correctly according to the resources given in the getting started section. 
